@@ -22,33 +22,33 @@ function gcred() (
     return 1
   fi
   
-  # make sure aws-okta is installed else die
-  if ! type -a aws-okta &>/dev/null
+  # make sure aws cli is installed else die
+  if ! type -a aws &>/dev/null
   then
-    echo "Error: $0 - aws-okta not found."
+    echo "Error: $0 - aws cli not found."
     return 2
   fi
   
   if [[ "$env" == "prod" ]]
   then
-    env="aws_production_it"
+    env="sso_it_pro_admin"
   fi
   
   if [[ "$env" == "stag" ]]
   then
-    env="aws_staging_it"
+    env="sso_it_sta_admin"
   fi
 
   if [[ "$env" == "play" ]]
   then
-    env="aws_playground_it"
+    env="sso_it_pla_admin"
   fi
 
-  list_of_envs=(aws_production_it aws_staging_it aws_playground_it)
+  list_of_envs=(sso_it_pro_admin sso_it_sta_admin sso_it_pla_admin)
 
   if exists_in_list "$env" "${list_of_envs[@]}"
   then
-    aws-okta --mfa-factor-type "push" --mfa-provider "OKTA" exec $env -- $SHELL
+    aws sso login --profile $env
   else
     echo "Profile '"$1"' not found in your aws config. Use 'prod', 'stag' or 'play' instead."
   fi
