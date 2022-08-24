@@ -1,4 +1,4 @@
-# aws-okta: auth stage
+# aws sso: auth stage
 
 function gcred() (
   function exists_in_list() {
@@ -57,3 +57,7 @@ function gcred() (
 # VNC to AWS Mac mini
 
 alias mmvnc="aws ssm start-session --target i-0e1f71f003ecfbd66 --document-name AWS-StartPortForwardingSession --parameters '{\"portNumber\":[\"5900\"],\"localPortNumber\":[\"59000\"]}'"
+
+# RDP to AWS Bastion Windows
+
+alias rdpbw="aws ssm start-session --target i-079287c947016c2e7 --document-name AWS-StartPortForwardingSession --parameters "localPortNumber=9000,portNumber=3389""
